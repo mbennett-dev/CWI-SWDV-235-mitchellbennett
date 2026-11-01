@@ -1,30 +1,14 @@
 package cwi.edu;
 
 import io.javalin.Javalin;
-public class Main 
-{
-    public static void main( String[] args )
-    {
-        Javalin app = Javalin.create().start(7070);
+import io.javalin.http.staticfiles.Location;
 
-        app.get("/hello/{name}", ctx -> {
-            String name = ctx.pathParam("name");
-            ctx.result("Hello, " + name);
-        });
-
-        app.get("/hello/{name}/html", ctx -> {
-            String name = ctx.pathParam("name");
-            
-            String htmlContent = "<html>\n" +
-                    "<head>\n" +
-                    "    <title>Javalin Intro</title>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "    <h1>Hello, " + name + "</h1>\n" +
-                    "</body>\n" +
-                    "</html>";
-            
-            ctx.html(htmlContent);
-        });
+public class Main {
+    public static void main(String[] args) {
+        Javalin app = Javalin.create(config -> {
+            config.staticFiles.add("/public", Location.CLASSPATH);
+            config.routes.post("/account", ctx -> ctx.redirect("/account.html"));
+            config.routes.get("/logout", ctx -> ctx.redirect("/"));
+        }).start(7070);
     }
 }
