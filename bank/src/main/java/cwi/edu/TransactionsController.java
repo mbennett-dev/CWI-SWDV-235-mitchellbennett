@@ -5,17 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import io.javalin.apibuilder.CrudHandler;
 import io.javalin.http.Context;
-import static j2html.TagCreator.a;
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.button;
-import static j2html.TagCreator.each;
-import static j2html.TagCreator.form;
-import static j2html.TagCreator.h1;
-import static j2html.TagCreator.h2;
-import static j2html.TagCreator.input;
-import static j2html.TagCreator.li;
-import static j2html.TagCreator.p;
-import static j2html.TagCreator.ul;
+import static j2html.TagCreator.*;
 
 public class TransactionsController implements CrudHandler {
     private final Map<String, String> transactions = new ConcurrentHashMap<>();
@@ -80,32 +70,6 @@ public class TransactionsController implements CrudHandler {
     }
 
     private void renderAllTransactions(Context ctx) {
-        ctx.html(
-            body(
-                h1("Transactions"),
-                ul(
-                    each(transactions.entrySet(), entry -> li(
-                        a("Transaction " + entry.getKey() + ": " + entry.getValue())
-                            .withHref("/transactions/" + entry.getKey())
-                    ))
-                ),
-                h2("Create"),
-                form().withMethod("post").withAction("/transactions").with(
-                    input().withType("text").withName("description").withPlaceholder("Transaction details"),
-                    button("Create").withType("submit")
-                ),
-                h2("Update"),
-                form().withMethod("post").withAction("/transactions/update").with(
-                    input().withType("text").withName("txId").withPlaceholder("Transaction id"),
-                    input().withType("text").withName("description").withPlaceholder("New details"),
-                    button("Update").withType("submit")
-                ),
-                h2("Delete"),
-                form().withMethod("post").withAction("/transactions/delete").with(
-                    input().withType("text").withName("txId").withPlaceholder("Transaction id"),
-                    button("Delete").withType("submit")
-                )
-            ).render()
-        );
+        ctx.redirect("/transactions");
     }
 }
