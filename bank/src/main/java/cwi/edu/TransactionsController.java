@@ -1,14 +1,13 @@
 package cwi.edu;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.HashMap;
 import io.javalin.apibuilder.CrudHandler;
 import io.javalin.http.Context;
 import static j2html.TagCreator.*;
 
 public class TransactionsController implements CrudHandler {
-    private final Map<String, String> transactions = new ConcurrentHashMap<>();
+    private final Map<String, String> transactions = new HashMap<>();
 
     @Override
     public synchronized void create(Context ctx) {
@@ -24,14 +23,14 @@ public class TransactionsController implements CrudHandler {
 
     @Override
     // TransactionController.java
-        public void getAll(Context ctx) {
+        public synchronized void getAll(Context ctx) {
             // Use ctx to render all transactions html
 		    // Pass the transactions model as a parameter
         ctx.render("jte/transactionsPage.jte", Map.of("transactions", transactions));
     }
 
     @Override
-    public void getOne(Context ctx, String resourceId) {
+    public synchronized void getOne(Context ctx, String resourceId) {
         String description = transactions.get(resourceId);
         if (description == null) {
             ctx.status(404).result("Transaction not found");
@@ -48,7 +47,7 @@ public class TransactionsController implements CrudHandler {
     }
 
     @Override
-    public void update(Context ctx, String resourceId) {
+    public synchronized void update(Context ctx, String resourceId) {
         if (resourceId == null || !transactions.containsKey(resourceId)) {
             ctx.status(404).result("Transaction not found");
             return;
@@ -60,7 +59,7 @@ public class TransactionsController implements CrudHandler {
     }
 
     @Override
-    public void delete(Context ctx, String resourceId) {
+    public synchronized void delete(Context ctx, String resourceId) {
         if (resourceId == null || transactions.remove(resourceId) == null) {
             ctx.status(404).result("Transaction not found");
             return;
