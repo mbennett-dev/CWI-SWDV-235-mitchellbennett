@@ -1,11 +1,13 @@
 package cwi.edu;
 
+import java.util.Map;
+
 public record UserAccount(
-    String username,
-    String password,
-    double balance
+    String name,
+    Double balance,
+    Map<String, String> transactions
 ) {   
-    // public String formattedBalance() {
-    //     return new java.text.DecimalFormat("$#,###.00").format(balance);
-    // }
+     public String formatBalance() {
+         return new java.text.DecimalFormat("$#,##0.00").format(balance);
+     }
 }
