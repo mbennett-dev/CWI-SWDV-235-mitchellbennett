@@ -22,11 +22,12 @@ public class TransactionsController implements CrudHandler {
     }
 
     @Override
-    // TransactionController.java
-        public synchronized void getAll(Context ctx) {
-            // Use ctx to render all transactions html
-		    // Pass the transactions model as a parameter
-        ctx.render("jte/transactionsPage.jte", Map.of("transactions", transactions));
+    public synchronized void getAll(Context ctx) {
+        UserAccount account = new UserAccount("Account Holder", 0.0, transactions);
+        ctx.render("jte/accountPage.jte", Map.of(
+            "title", "Account",
+            "account", account
+        ));
     }
 
     @Override

@@ -8,6 +8,6 @@
         <strong>Name:</strong>&nbsp;${name}
     </div>
     <div>
-        <strong>Balance:</strong>&nbsp;$${balance}
+        <strong>Balance:</strong>&nbsp;${balance}
     </div>
 </div>
