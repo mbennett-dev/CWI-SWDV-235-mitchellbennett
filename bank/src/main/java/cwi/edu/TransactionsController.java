@@ -23,7 +23,7 @@ public class TransactionsController implements CrudHandler {
 
     @Override
     public synchronized void getAll(Context ctx) {
-        UserAccount account = new UserAccount("Account Holder", 0.0, transactions);
+        UserAccount account = new UserAccount("0", "Account Holder", AppRole.CUSTOMER, 0.0, transactions);
         ctx.render("jte/accountPage.jte", Map.of(
             "title", "Account",
             "account", account

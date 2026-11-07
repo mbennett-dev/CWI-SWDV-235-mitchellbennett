@@ -7,6 +7,8 @@
         @template.jte.userAccount(name = account.name(), balance = account.formatBalance())
     `,
     detail = @`
+        <a href="/account.html">Back to account</a>
+        <a href="/logout">Log Out</a>
         @template.jte.transactionsList(transactions = account.transactions())
 
         <h2>Create transaction</h2>
