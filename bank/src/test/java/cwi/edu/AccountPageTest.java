@@ -24,6 +24,7 @@ public class AccountPageTest {
         assertTrue(html.contains("Test User"));
         assertTrue(html.contains("$1,234.50"));
         assertFalse(html.contains("$$"));
+        assertTrue(html.contains("href=\"/logout\""));
         assertTrue(html.contains("<li>1: Deposit</li>"));
         assertTrue(html.contains("action=\"/transactions\" method=\"post\""));
         assertTrue(html.contains("action=\"/transactions/update\" method=\"post\""));
@@ -46,7 +47,7 @@ public class AccountPageTest {
         StringOutput output = new StringOutput();
         engine.render("jte/accountPage.jte", Map.of(
             "title", "Account test",
-            "account", new UserAccount("Test User", 1234.5, transactions)
+            "account", new UserAccount("test-id", "Test User", AppRole.CUSTOMER, 1234.5, transactions)
         ), output);
         return output.toString();
     }

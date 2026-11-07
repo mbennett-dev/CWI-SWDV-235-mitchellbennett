@@ -15,6 +15,7 @@
   </head>
   <body>
     <h1>Transactions</h1>
+    <a href="/account.html">Back to account</a>
     <ul>
 		<%-- Loop through the transactions map --%>
 		@for(var entry : transactions.entrySet())
