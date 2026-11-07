@@ -5,10 +5,14 @@
     title = title,
     account = @`
         @template.jte.userAccount(name = account.name(), balance = account.formatBalance())
+
+        <details class="quick-actions">
+            <summary>Quick Actions</summary>
+            <a href="/logout">Log Out</a>
+        </details>
     `,
     detail = @`
-        <a href="/account.html">Back to account</a>
-        <a href="/logout">Log Out</a>
+        <h2>Recent Activity</h2>
         @template.jte.transactionsList(transactions = account.transactions())
 
         <h2>Create transaction</h2>

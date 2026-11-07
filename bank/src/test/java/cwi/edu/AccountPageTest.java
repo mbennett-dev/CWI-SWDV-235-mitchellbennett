@@ -25,6 +25,8 @@ public class AccountPageTest {
         assertTrue(html.contains("$1,234.50"));
         assertFalse(html.contains("$$"));
         assertTrue(html.contains("href=\"/logout\""));
+        assertTrue(html.contains("<summary>Quick Actions</summary>"));
+        assertTrue(html.contains("<h2>Recent Activity</h2>"));
         assertTrue(html.contains("<li>1: Deposit</li>"));
         assertTrue(html.contains("action=\"/transactions\" method=\"post\""));
         assertTrue(html.contains("action=\"/transactions/update\" method=\"post\""));
