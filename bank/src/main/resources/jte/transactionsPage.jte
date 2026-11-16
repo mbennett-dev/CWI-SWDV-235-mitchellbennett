@@ -15,11 +15,14 @@
   </head>
   <body>
     <h1>Transactions</h1>
-    <a href="/account.html">Back to account</a>
+    <a href="/account">Account</a>
+    <a href="/logout">Log Out</a>
     <ul>
 		<%-- Loop through the transactions map --%>
 		@for(var entry : transactions.entrySet())
 			<li>${entry.getKey()}: ${entry.getValue()}</li>
+        @else
+            <li>You have no transactions to display.</li>
 		@endfor
     </ul>
     <h2>Create transaction</h2>
