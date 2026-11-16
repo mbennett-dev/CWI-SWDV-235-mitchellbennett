@@ -4,8 +4,11 @@ import java.util.List;
 
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.crud;
+import static io.javalin.apibuilder.ApiBuilder.delete;
 import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.patch;
 import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.post;
 import io.javalin.http.UnauthorizedResponse;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.template.JavalinJte;
@@ -13,6 +16,7 @@ import io.javalin.rendering.template.JavalinJte;
 public class Main {
     public static void main(String[] args) {
         TransactionsController transactionsController = new TransactionsController();
+        UsersController usersController = new UsersController();
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public", Location.CLASSPATH);
             config.routes.post("/account", AuthController::authenticate);
@@ -43,6 +47,16 @@ public class Main {
             config.routes.apiBuilder(() -> {
                 path("/account", List.of(AppRole.CUSTOMER), () -> {
                     get(AccountController::renderAccount); // requires CUSTOMER role
+                });
+                path("/users", () -> {
+                    post(usersController::create);
+                    get(usersController::getAll, AppRole.ADMIN);
+                    get("/{id}", ctx ->
+                        usersController.getOne(ctx, ctx.pathParam("id")), AppRole.ADMIN);
+                    patch("/{id}", ctx ->
+                        usersController.update(ctx, ctx.pathParam("id")), AppRole.ADMIN);
+                    delete("/{id}", ctx ->
+                        usersController.delete(ctx, ctx.pathParam("id")), AppRole.ADMIN);
                 });
                 path("/transactions", () -> {
                     crud("/{id}", transactionsController);

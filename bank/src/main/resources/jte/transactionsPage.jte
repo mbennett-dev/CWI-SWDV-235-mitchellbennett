@@ -18,7 +18,7 @@
       <div class="row align-items-start">
         <div class="col">
     <h1>Transactions</h1>
-    <a href="/account">Back to account</a>
+    <a href="/account">Account</a>
     <a href="/logout">Log Out</a>
     <ul>
 		<%-- Loop through the transactions map --%>
