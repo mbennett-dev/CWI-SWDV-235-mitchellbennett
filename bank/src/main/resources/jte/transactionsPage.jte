@@ -15,7 +15,7 @@
   </head>
   <body>
     <h1>Transactions</h1>
-    <a href="/account">Account</a>
+    <a href="/account">Back to account</a>
     <a href="/logout">Log Out</a>
     <ul>
 		<%-- Loop through the transactions map --%>
