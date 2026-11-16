@@ -4,10 +4,12 @@
 @template.jte.accountLayout(
     title = title,
     account = @`
+        <h1>${title}</h1>
         @template.jte.userAccount(name = account.name(), balance = account.formatBalance())
 
         <details class="quick-actions">
             <summary>Quick Actions</summary>
+            <a href="/transactions">Transactions</a>
             <a href="/logout">Log Out</a>
         </details>
     `,

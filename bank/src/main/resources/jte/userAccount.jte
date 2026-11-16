@@ -3,7 +3,6 @@
 @param String balance
 
 <div>
-    <h1>Account</h1>
     <div>
         <strong>Name:</strong>&nbsp;${name}
     </div>
