@@ -4,7 +4,6 @@
 <%-- Parameters --%>
 @param String title = "My Bank"
 @param Content account
-@param Content detail
 
 <!doctype html>
 <html lang="en">
@@ -20,9 +19,6 @@
         <div class="row align-items-start">
             <div class="col">
                 ${account}
-            </div>
-            <div class="panel">
-                ${detail}
             </div>
         </div>
     </div>

@@ -11,9 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
+    <div class="account-layout">
+      <div class="row align-items-start">
+        <div class="col">
     <h1>Transactions</h1>
     <a href="/account">Back to account</a>
     <a href="/logout">Log Out</a>
@@ -43,6 +46,9 @@
       <input name="txId" placeholder="Transaction ID" required>
       <button type="submit">Delete</button>
     </form>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
