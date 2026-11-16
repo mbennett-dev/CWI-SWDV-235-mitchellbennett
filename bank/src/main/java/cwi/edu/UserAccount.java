@@ -1,12 +1,13 @@
 package cwi.edu;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public record UserAccount(
     String id,
     String name,
     AppRole role,
-    Double balance,
+    BigDecimal balance,
     Map<String, String> transactions
 ) {   
      public String formatBalance() {
