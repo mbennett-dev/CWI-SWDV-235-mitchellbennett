@@ -1,7 +1,5 @@
 package cwi.edu;
 
-import java.util.List;
-
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.crud;
 import static io.javalin.apibuilder.ApiBuilder.delete;
@@ -19,10 +17,14 @@ public class Main {
         UsersController usersController = new UsersController();
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public", Location.CLASSPATH);
+
             config.routes.post("/account", AuthController::authenticate);
+
             config.routes.get("/logout", AuthController::logout);
+
             config.routes.post("/transactions/update", ctx ->
                 transactionsController.update(ctx, ctx.formParam("txId")));
+
             config.routes.post("/transactions/delete", ctx ->
                 transactionsController.delete(ctx, ctx.formParam("txId")));
 
@@ -45,9 +47,8 @@ public class Main {
             config.fileRenderer(new JavalinJte()); // <-- set jte as the renderer
 
             config.routes.apiBuilder(() -> {
-                path("/account", List.of(AppRole.CUSTOMER), () -> {
-                    get(AccountController::renderAccount); // requires CUSTOMER role
-                });
+                get("/accounts", AccountController::renderAccounts, AppRole.CUSTOMER);
+                get("/account/{id}", AccountController::renderAccountDetail, AppRole.CUSTOMER);
                 path("/users", () -> {
                     post(usersController::create);
                     get(usersController::getAll, AppRole.ADMIN);

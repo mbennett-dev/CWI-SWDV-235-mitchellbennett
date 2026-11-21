@@ -1,5 +1,7 @@
 package cwi.edu.Data;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +16,22 @@ public interface AccountsMapper {
         LIMIT 1
         """)
     Accounts findByUserId(@Param("userId") int userId);
+
+    @Select("""
+        SELECT account_id, user_id, account_type, balance
+        FROM accounts
+        WHERE user_id = #{userId}
+        ORDER BY account_id
+        """)
+    List<Accounts> findAllByUserId(@Param("userId") int userId);
+
+    @Select("""
+        SELECT account_id, user_id, account_type, balance
+        FROM accounts
+        WHERE account_id = #{accountId} AND user_id = #{userId}
+        """)
+    Accounts findOwnedAccount(@Param("accountId") int accountId,
+                              @Param("userId") int userId);
 
     @Insert("""
         INSERT INTO accounts (user_id, account_type, balance)
