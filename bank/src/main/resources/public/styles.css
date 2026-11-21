@@ -83,12 +83,29 @@ h1 {
     border-radius: 4px;
 }
 
+a,
 .login-form button {
-    margin-top: 8px;
+    display: inline-block;
     padding: 10px;
     color: white;
     background-color: #174a70;
     border: 0;
     border-radius: 4px;
+    text-decoration: none;
     cursor: pointer;
+}
+
+a:hover,
+.login-form button:hover {
+    background-color: #123a59;
+}
+
+a:focus-visible,
+.login-form button:focus-visible {
+    outline: 2px solid #123a59;
+    outline-offset: 2px;
+}
+
+.login-form button {
+    margin-top: 8px;
 }
