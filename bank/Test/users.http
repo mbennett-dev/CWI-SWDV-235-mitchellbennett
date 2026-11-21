@@ -8,15 +8,13 @@ Cookie: javalin-cookie-store=eyJ1c2VyLWlkIjoxLCJ1c2VyLXJvbGUiOiJBRE1JTiJ9
 
 ###
 
-POST http://localhost:7070/users?return=json
-content-type: application/json
-Cookie: javalin-cookie-store=eyJ1c2VyLWlkIjoxLCJ1c2VyLXJvbGUiOiJBRE1JTiJ9
+POST http://localhost:7070/users
+Content-Type: application/json
 
 {
-    "username": "test",
+    "username": "test2",
     "password": "password",
-    "email": "test@test.com",
+    "email": "test2@example.com",
     "firstName": "Test",
-    "lastName": "Guy",
-    "role": "CUSTOMER"
+    "lastName": "Gal"
 }

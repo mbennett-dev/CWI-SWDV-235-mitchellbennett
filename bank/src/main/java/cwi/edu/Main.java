@@ -49,6 +49,8 @@ public class Main {
             config.routes.apiBuilder(() -> {
                 get("/accounts", AccountController::renderAccounts, AppRole.CUSTOMER);
                 get("/account/{id}", AccountController::renderAccountDetail, AppRole.CUSTOMER);
+                post("/account/{id}/transactions", transactionsController::createForAccount,
+                    AppRole.CUSTOMER);
                 path("/users", () -> {
                     post(usersController::create);
                     get(usersController::getAll, AppRole.ADMIN);

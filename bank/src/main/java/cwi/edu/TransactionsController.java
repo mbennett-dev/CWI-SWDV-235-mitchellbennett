@@ -1,13 +1,89 @@
 package cwi.edu;
 
-import java.util.Map;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import cwi.edu.Data.AccountsMapper;
+import cwi.edu.Data.MyBatisConfig;
+import cwi.edu.Data.Transactions;
+import cwi.edu.Data.TransactionsMapper;
 import io.javalin.apibuilder.CrudHandler;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
+import io.javalin.http.NotFoundResponse;
+import io.javalin.http.UnauthorizedResponse;
 import static j2html.TagCreator.*;
 
 public class TransactionsController implements CrudHandler {
     private final Map<String, String> transactions = new HashMap<>();
+
+    public void createForAccount(Context ctx) {
+        int accountId;
+        try {
+            accountId = Integer.parseInt(ctx.pathParam("id"));
+        } catch (NumberFormatException e) {
+            throw new BadRequestResponse("Invalid account ID");
+        }
+
+        String userIdCookie = ctx.cookieStore().get("user-id");
+        if (userIdCookie == null) {
+            throw new UnauthorizedResponse();
+        }
+
+        int userId;
+        try {
+            userId = Integer.parseInt(userIdCookie);
+        } catch (NumberFormatException e) {
+            throw new UnauthorizedResponse();
+        }
+
+        Transactions.TransactionType transactionType;
+        try {
+            transactionType = Transactions.TransactionType.valueOf(
+                ctx.formParam("transactionType"));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new BadRequestResponse("Invalid transaction type");
+        }
+
+        BigDecimal amount;
+        try {
+            amount = new BigDecimal(ctx.formParam("amount"));
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new BadRequestResponse("Invalid transaction amount");
+        }
+        if (amount.signum() <= 0) {
+            throw new BadRequestResponse("Transaction amount must be positive");
+        }
+
+        String description = ctx.formParam("description");
+        if (description == null || description.isBlank()) {
+            throw new BadRequestResponse("Transaction description is required");
+        }
+
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession()) {
+            if (session.getMapper(AccountsMapper.class)
+                    .findOwnedAccount(accountId, userId) == null) {
+                throw new NotFoundResponse("Account not found");
+            }
+
+            Transactions transaction = new Transactions();
+            transaction.setAccountId(accountId);
+            transaction.setTransactionType(transactionType);
+            transaction.setAmount(amount);
+            transaction.setDescription(description);
+
+            if (session.getMapper(TransactionsMapper.class).insert(transaction) != 1) {
+                throw new IllegalStateException("Transaction insert failed");
+            }
+
+            session.commit();
+        }
+
+        ctx.redirect("/account/" + accountId);
+    }
 
     @Override
     public synchronized void create(Context ctx) {
