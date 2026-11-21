@@ -66,10 +66,6 @@ h1 {
     text-align: center;
 }
 
-.login-failed a {
-    color: #174a70;
-}
-
 .login-form {
     display: grid;
     gap: 10px;
