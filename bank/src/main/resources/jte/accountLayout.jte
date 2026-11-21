@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
+    <nav class="navbar bg-light px-4">
+        <span class="navbar-brand">Javalin Bank</span>
+        <a href="/logout">Log Out</a>
+    </nav>
     <div class="account-layout">
         <div class="row align-items-start">
             <div class="col">
